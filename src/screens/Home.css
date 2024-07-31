@@ -1,0 +1,89 @@
+.home {
+    text-align: center;
+    padding: 2rem;
+    background-color: #fff3f4;
+    min-height: calc(100vh - 80px);
+}
+
+.hero {
+    position: relative;
+    background-image: url('./blood_donation_2.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.hero-text {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.hero-button {
+    padding: 0.75rem 1.5rem;
+    background-color: white;
+    color: #ff4b5c;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.hero-button:hover {
+    background-color: #ffccd5;
+    color: #ff4b5c;
+}
+
+.reviews {
+    background-color: #ffe6e8;
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.reviews h2 {
+    color: #ff4b5c;
+    margin-bottom: 1.5rem;
+}
+
+.review-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.review {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.review p {
+    margin: 0 0 1rem 0;
+    color: #555;
+}
+
+.review h4 {
+    margin: 0;
+    color: #ff4b5c;
+    font-weight: bold;
+}
