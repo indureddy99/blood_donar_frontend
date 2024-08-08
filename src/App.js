@@ -8,6 +8,10 @@ import BloodRequest from './screens/BloodRequest';
 import Inventory from './screens/Inventory';
 import About from './screens/About';
 import Contact from './screens/Contact';
+import Login from './screens/Login';
+import SignUp from './screens/SignUp';
+import Dashboard from './screens/Dashboard';
+import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
 const App = () => {
@@ -23,6 +27,18 @@ const App = () => {
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            
+            {/* Protect the Dashboard route */}
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
           </Routes>
         </div>
         <Footer />

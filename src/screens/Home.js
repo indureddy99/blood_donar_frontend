@@ -1,14 +1,21 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
 const Home = () => {
+    const navigate = useNavigate();
+
+    const handleGetStarted = () => {
+        navigate('/login');
+    };
+
     return (
         <div className="home">
             <div className="hero">
                 <div className="hero-text">
                     <h1>Welcome to the Blood Bank</h1>
                     <p>Your contribution can save lives. Register as a donor or request blood.</p>
-                    <button className="hero-button">Get Started</button>
+                    <button className="hero-button" onClick={handleGetStarted}>Get Started</button>
                 </div>
             </div>
             <div className="reviews">
