@@ -1,14 +1,7 @@
 import React from 'react';
 import './InventoryList.css';
 
-const InventoryList = () => {
-    const inventoryData = [
-        { bloodType: 'A+', units: 10 },
-        { bloodType: 'B+', units: 8 },
-        { bloodType: 'O+', units: 15 },
-        { bloodType: 'AB+', units: 5 },
-    ];
-
+const InventoryList = ({ data }) => {
     return (
         <div className="inventory-list">
             <h2>Available Blood Inventory</h2>
@@ -16,14 +9,18 @@ const InventoryList = () => {
                 <thead>
                     <tr>
                         <th>Blood Type</th>
+                        <th>Location</th>
                         <th>Units Available</th>
+                        <th>Expiry Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {inventoryData.map((item, index) => (
+                    {data.map((item, index) => (
                         <tr key={index}>
-                            <td>{item.bloodType}</td>
-                            <td>{item.units}</td>
+                            <td>{item.blood_type}</td>
+                            <td>{item.location}</td>
+                            <td>{item.amount_of_blood} L</td>
+                            <td>{new Date(item.expiry_date).toLocaleDateString()}</td>
                         </tr>
                     ))}
                 </tbody>

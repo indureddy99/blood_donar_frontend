@@ -45,3 +45,16 @@
 .contact-form button:hover {
     background-color: #e63946;
 }
+
+.status-message {
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+
+.status-message.success {
+    color: #4caf50;
+}
+
+.status-message.error {
+    color: #f44336;
+}

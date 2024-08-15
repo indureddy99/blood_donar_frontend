@@ -1,3 +1,26 @@
 .inventory {
     padding: 2rem;
 }
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.filters input,
+.filters select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.filters input {
+    flex: 1;
+    margin-right: 1rem;
+}
+
+.filters select {
+    width: 200px;
+}
