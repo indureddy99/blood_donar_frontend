@@ -13,6 +13,9 @@ import SignUp from './screens/SignUp';
 import Dashboard from './screens/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
+import AdminDashboard from './screens/AdminDashboard';
+import AdminInventory from './screens/AdminInventory';
+import ContactList from './screens/ContactList';
 
 const App = () => {
   return (
@@ -29,6 +32,9 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path="/admin-inventory" element={<AdminInventory />} />
+            <Route path="/admin-contact" element={<ContactList />} />
             
             {/* Protect the Dashboard route */}
             <Route 

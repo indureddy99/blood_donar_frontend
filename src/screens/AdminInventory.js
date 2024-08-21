@@ -1,33 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import InventoryList from '../components/InventoryList';
-import './Inventory.css';
+import AdminInventoryList from '../components/AdminInventoryList';
+import './AdminInventory.css';
 
-const Inventory = () => {
+const AdminInventory = () => {
     const [location, setLocation] = useState('');
     const [bloodTypeFilter, setBloodTypeFilter] = useState('');
     const [inventoryData, setInventoryData] = useState([]);
 
+    // Fetch data from the API when the component mounts
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('http://localhost:3002/blood_donar/inventorys');
+            setInventoryData(response.data.data);
+        } catch (error) {
+            console.error("Error fetching data", error);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                let config = {
-                    method: 'get',
-                    maxBodyLength: Infinity,
-                    url: 'http://localhost:3002/blood_donar/inventorys',
-                    headers: { 
-                        'Content-Type': 'application/json'
-                    }
-                };
-
-                const response = await axios.request(config);
-                setInventoryData(response.data.data);
-            } catch (error) {
-                console.error("Error fetching data", error);
-            }
-        };
-
         fetchData();
     }, []);
 
@@ -36,6 +27,10 @@ const Inventory = () => {
         const matchesBloodType = bloodTypeFilter ? item.blood_type === bloodTypeFilter : true;
         return matchesLocation && matchesBloodType;
     });
+
+    const refreshData = () => {
+        fetchData();
+    };
 
     return (
         <div className="inventory">
@@ -61,9 +56,9 @@ const Inventory = () => {
                     <option value="AB-">AB-</option>
                 </select>
             </div>
-            <InventoryList data={filteredData} />
+            <AdminInventoryList data={filteredData} refreshData={refreshData} />
         </div>
     );
 };
 
-export default Inventory;
+export default AdminInventory;

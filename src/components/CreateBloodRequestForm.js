@@ -12,19 +12,14 @@ const CreateBloodRequestForm = () => {
     const [bloodBanks, setBloodBanks] = useState([]);
     const [message, setMessage] = useState('');
 
-
     useEffect(() => {
-        // Fetch blood banks from the API
-        axios.get('http://localhost:3002/blood_donar/inventorys')
+        axios.get('http://localhost:3002/blood-donars/inventorys')
             .then(response => {
-                if (response.data && Array.isArray(response.data.data)) {
-                    setBloodBanks(response.data.data);
-                } else {
-                    console.error('Unexpected response format:', response.data);
-                }
+                const { data } = response.data;
+                setBloodBanks(data);
             })
             .catch(error => {
-                console.error('Failed to fetch blood banks:', error);
+                console.error('Error fetching blood banks:', error);
             });
     }, []);
 
@@ -54,18 +49,12 @@ const CreateBloodRequestForm = () => {
             request_date: formData.requestDate
         };
 
+
         axios.post('http://localhost:3002/blood-requests', requestData)
             .then(response => {
                 setMessage('Blood request created successfully!');
-                setFormData({
-                    bloodType: '',
-                    amountNeeded: '',
-                    requestDate: '',
-                    bloodBankId: ''
-                });
             })
             .catch(error => {
-                console.error('Error creating blood request:', error);
                 setMessage('Failed to create blood request. Please try again.');
             });
     };
@@ -80,7 +69,7 @@ const CreateBloodRequestForm = () => {
                     <option value="">Select Blood Bank</option>
                     {bloodBanks.map(bloodBank => (
                         <option key={bloodBank.blood_bank_id} value={bloodBank.blood_bank_id}>
-                            {bloodBank.blood_bank_name} - {bloodBank.location}
+                            {bloodBank.blood_bank_name || `Blood Bank ${bloodBank.blood_bank_id}`} - {bloodBank.location}
                         </option>
                     ))}
                 </select>
@@ -101,7 +90,7 @@ const CreateBloodRequestForm = () => {
             </label>
             <label>
                 Amount Needed (liters):
-                <input type="number" step="0.01" name="amountNeeded" value={formData.amountNeeded} onChange={handleChange} max="5" required />
+                <input type="number" step="0.01" name="amountNeeded" value={formData.amountNeeded} onChange={handleChange} required />
             </label>
             <label>
                 Request Date:

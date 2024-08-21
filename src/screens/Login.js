@@ -34,16 +34,18 @@ const Login = () => {
             console.log(JSON.stringify(response.data));
 
             if (response.status === 200 && response.data.token) {
-                // Extract the user_id and token from the response
                 const { user_id } = response.data.results[0];
                 const { token } = response.data;
 
-                // Store them in localStorage
+                
                 localStorage.setItem('authToken', token);
                 localStorage.setItem('user_id', user_id);
 
-                // Redirect to the dashboard page
-                navigate('/dashboard');
+                if (user_id === 1) {
+                    navigate('/admin-dashboard');
+                } else {
+                    navigate('/dashboard');
+                }
             } else {
                 setErrorMessage(response.data.message || 'Login failed');
             }
