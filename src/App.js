@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -12,16 +12,40 @@ import Login from './screens/Login';
 import SignUp from './screens/SignUp';
 import Dashboard from './screens/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
-import './App.css';
 import AdminDashboard from './screens/AdminDashboard';
 import AdminInventory from './screens/AdminInventory';
 import ContactList from './screens/ContactList';
+import './App.css';
 
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    const userId = localStorage.getItem('user_id');
+
+    if (token) {
+      setIsLoggedIn(true);
+      setIsAdmin(userId === '1');
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user_id');
+    setIsLoggedIn(false);
+    setIsAdmin(false);
+  };
+
   return (
     <Router>
       <div className="App">
-        <Navbar />
+        <Navbar 
+          isLoggedIn={isLoggedIn} 
+          isAdmin={isAdmin} 
+          handleLogout={handleLogout} 
+        />
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -30,11 +54,12 @@ const App = () => {
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/admin-inventory" element={<AdminInventory />} />
             <Route path="/admin-contact" element={<ContactList />} />
+            
             
             {/* Protect the Dashboard route */}
             <Route 

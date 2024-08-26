@@ -50,7 +50,8 @@ const Dashboard = () => {
                             <thead>
                                 <tr>
                                     <th>Request ID</th>
-                                    <th>Blood Bank ID</th>
+                                    <th>Blood Bank Name</th>
+                                    <th>Location</th>
                                     <th>Blood Type</th>
                                     <th>Amount Needed (liters)</th>
                                     <th>Request Date</th>
@@ -61,10 +62,11 @@ const Dashboard = () => {
                                 {bloodRequests.map(request => (
                                     <tr key={request.request_id}>
                                         <td>{request.request_id}</td>
-                                        <td>{request.blood_bank_id}</td>
+                                        <td>{request.blood_bank_name}</td>
+                                        <td>{request.location}</td>
                                         <td>{request.blood_type}</td>
                                         <td>{request.amount_needed}</td>
-                                        <td>{request.request_date}</td>
+                                        <td>{new Date(request.request_date).toLocaleDateString()}</td>
                                         <td>{request.status}</td>
                                     </tr>
                                 ))}
@@ -82,11 +84,12 @@ const Dashboard = () => {
                             <thead>
                                 <tr>
                                     <th>Donation ID</th>
-                                    <th>Blood Bank ID</th>
+                                    <th>Blood Bank Name</th>
+                                    <th>Location</th>
                                     <th>Blood Type</th>
                                     <th>Amount Donated (liters)</th>
                                     <th>Donation Date</th>
-                                    <th>Expiry Date</th>
+                                    {/* <th>Expiry Date</th> */}
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -94,11 +97,12 @@ const Dashboard = () => {
                                 {bloodDonations.map(donation => (
                                     <tr key={donation.donation_id}>
                                         <td>{donation.donation_id}</td>
-                                        <td>{donation.blood_bank_id}</td>
+                                        <td>{donation.blood_bank_name}</td>
+                                        <td>{donation.location}</td>
                                         <td>{donation.blood_type}</td>
                                         <td>{donation.amount_of_blood}</td>
-                                        <td>{donation.donation_date}</td>
-                                        <td>{donation.expiry_date}</td>
+                                        <td>{new Date(donation.donation_date).toLocaleDateString()}</td>
+                                        {/* <td>{donation.expiry_date}</td> */}
                                         <td>{donation.status}</td>
                                     </tr>
                                 ))}

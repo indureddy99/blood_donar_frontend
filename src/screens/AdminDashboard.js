@@ -11,7 +11,7 @@ const AdminDashboard = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
 
-    const user_id = localStorage.getItem('user_id');
+    // const user_id = localStorage.getItem('user_id');
     const token = localStorage.getItem('authToken');
 
     useEffect(() => {
@@ -24,6 +24,7 @@ const AdminDashboard = () => {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
+                // Set the blood requests and blood donations from API response
                 setBloodRequests(requestsResponse.data.data);
                 setBloodDonations(donationsResponse.data.data);
             } catch (err) {
@@ -76,12 +77,13 @@ const AdminDashboard = () => {
                         <thead>
                             <tr>
                                 <th>Request ID</th>
-                                <th>Blood Bank ID</th>
+                                <th>Full Name</th>
+                                <th>Blood Bank Name</th>
+                                <th>Location</th>
                                 <th>Blood Type</th>
                                 <th>Amount Needed (liters)</th>
                                 <th>Request Date</th>
                                 <th>Status</th>
-                                <th>Fulfillment Date</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -89,12 +91,14 @@ const AdminDashboard = () => {
                             {bloodRequests.map(request => (
                                 <tr key={request.request_id}>
                                     <td>{request.request_id}</td>
-                                    <td>{request.blood_bank_id}</td>
+                                    <td>{`${request.first_name} ${request.last_name}`}</td>
+                                    <td>{request.blood_bank_name}</td>
+                                    <td>{request.location}</td>
                                     <td>{request.blood_type}</td>
                                     <td>{request.amount_needed}</td>
-                                    <td>{request.request_date}</td>
+                                    <td>{new Date(request.request_date).toLocaleDateString()}</td>
                                     <td>{request.status}</td>
-                                    <td>{request.fulfillment_date}</td>
+                                    
                                     <td>
                                         <button onClick={() => openModal(request, 'request')}>Update Status</button>
                                     </td>
@@ -110,7 +114,9 @@ const AdminDashboard = () => {
                         <thead>
                             <tr>
                                 <th>Donation ID</th>
-                                <th>Blood Bank ID</th>
+                                <th>FUll name</th>
+                                <th>Blood Bank Name</th>
+                                <th>Location</th>
                                 <th>Blood Type</th>
                                 <th>Amount Donated (liters)</th>
                                 <th>Donation Date</th>
@@ -123,11 +129,13 @@ const AdminDashboard = () => {
                             {bloodDonations.map(donation => (
                                 <tr key={donation.donation_id}>
                                     <td>{donation.donation_id}</td>
-                                    <td>{donation.blood_bank_id}</td>
+                                    <td>{donation.donor_name}</td>
+                                    <td>{donation.blood_bank_name}</td>
+                                    <td>{donation.location}</td>
                                     <td>{donation.blood_type}</td>
                                     <td>{donation.amount_of_blood}</td>
-                                    <td>{donation.donation_date}</td>
-                                    <td>{donation.expiry_date}</td>
+                                    <td>{new Date(donation.donation_date).toLocaleDateString()}</td>
+                                    <td>{new Date(donation.expiry_date).toLocaleDateString()}</td>
                                     <td>{donation.status}</td>
                                     <td>
                                         <button onClick={() => openModal(donation, 'donation')}>Update Status</button>

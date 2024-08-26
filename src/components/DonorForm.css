@@ -64,3 +64,33 @@
 .message.error {
     background-color: #f44336;
 }
+
+.donor-form-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.donor-form {
+    margin-bottom: 20px;
+}
+
+.donation-info {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.donation-info h3 {
+    margin-top: 0;
+}
+
+.donation-info ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.donation-info ul li {
+    margin-bottom: 10px;
+}

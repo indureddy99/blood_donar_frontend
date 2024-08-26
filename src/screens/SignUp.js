@@ -29,9 +29,9 @@ const SignUp = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         const data = JSON.stringify(formData);
-
+    
         const config = {
             method: 'post',
             maxBodyLength: Infinity,
@@ -41,22 +41,27 @@ const SignUp = () => {
             },
             data: data
         };
-
+    
         try {
             const response = await axios.request(config);
-            console.log(JSON.stringify(response.data));
-
-            if (response.status === 200) {
-                // Assuming the response contains a success message or a token
-                navigate('/login'); // Redirect to login page on successful signup
+    
+            if (response.status === 201) {
+                navigate('/login');
             } else {
                 setErrorMessage(response.data.message || 'Signup failed');
             }
         } catch (error) {
-            console.error(error);
-            setErrorMessage('An error occurred during signup. Please try again.');
+            console.error('Signup error:', error);
+            if (error.response) {
+                setErrorMessage(error.response.data.message || 'An error occurred during signup. Please try again.');
+            } else if (error.request) {
+                setErrorMessage('No response from server. Please try again later.');
+            } else {
+                setErrorMessage('An error occurred during signup. Please try again.');
+            }
         }
     };
+    
 
     return (
         <div className="signup-container">
@@ -138,7 +143,7 @@ const SignUp = () => {
                         <input 
                             type="text" 
                             id="mobileNo" 
-                            name="mobileNo" 
+                            name="mobileNo"
                             value={formData.mobileNo}
                             onChange={handleChange} 
                             required 

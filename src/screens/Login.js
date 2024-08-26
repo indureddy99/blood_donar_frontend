@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import './Login.css';
 import loginImage from './b0dc8f35-3126-4eae-b575-38285553c9a4.jpg';
 
-const Login = () => {
+const Login = ({ setIsLoggedIn, setIsAdmin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -13,34 +12,27 @@ const Login = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        const data = JSON.stringify({
+    
+        const data = {
             userEmail: email,
-            Password: password,
-        });
-
-        const config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: 'http://localhost:3002/blood_donar/autenticate/login',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            data: data,
+            Password: password
         };
-
+    
         try {
-            const response = await axios.request(config);
-            console.log(JSON.stringify(response.data));
-
+            const response = await axios.post('http://localhost:3002/blood_donar/autenticate/login', data, {
+                headers: { 'Content-Type': 'application/json' }
+            });
+    
             if (response.status === 200 && response.data.token) {
                 const { user_id } = response.data.results[0];
                 const { token } = response.data;
-
-                
+    
                 localStorage.setItem('authToken', token);
                 localStorage.setItem('user_id', user_id);
-
+    
+                setIsLoggedIn(true);
+                setIsAdmin(user_id === 1);
+    
                 if (user_id === 1) {
                     navigate('/admin-dashboard');
                 } else {
@@ -50,10 +42,11 @@ const Login = () => {
                 setErrorMessage(response.data.message || 'Login failed');
             }
         } catch (error) {
-            console.error(error);
-            setErrorMessage('An error occurred during login. Please try again.');
+            console.error('Login error:', error);  // Added logging for debugging
+            setErrorMessage(error.response?.data?.message || 'An error occurred during login. Please try again.');
         }
     };
+    
 
     return (
         <div className="login-container">
